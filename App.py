@@ -12,27 +12,19 @@ import pandas as pd
 import joblib
 import os
 
-# Get current directory
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
 # Load model and encoders safely
 model = joblib.load(os.path.join(BASE_DIR, "salary_prediction_model.pkl"))
 encoders = joblib.load(os.path.join(BASE_DIR, "label_encoder_sp.pkl"))
 
 st.title("Salary Prediction App")
 
-age = st.number_input("Age", min_value=18, max_value=65, value=25)
+age = st.number_input("Age",18,65,25)
 
 gender = st.selectbox("Gender", encoders["Gender"].classes_)
 education = st.selectbox("Education Level", encoders["Education Level"].classes_)
 job = st.selectbox("Job Title", encoders["Job Title"].classes_)
 
-experience = st.number_input(
-    "Years of Experience",
-    min_value=0.0,
-    max_value=40.0,
-    value=2.0
-)
+experience = st.number_input("Years of Experience",0.0,40.0,2.0)
 
 df = pd.DataFrame({
     "Age": [age],
