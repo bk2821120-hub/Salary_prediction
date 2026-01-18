@@ -12,7 +12,7 @@ import pandas as pd
 import joblib
 import os
 
-model = joblib.load("/content/salary_prediction_model.pkl")
+model = joblib.load("salary_prediction_model.pkl")
 encoders = joblib.load("/content/label_encoder_sp.pkl")
 
 st.title("Salary Prediction App")
