@@ -12,9 +12,8 @@ import pandas as pd
 import joblib
 import os
 
-# Load model and encoders safely
-model = joblib.load(os.path.join(BASE_DIR, "salary_prediction_model.pkl"))
-encoders = joblib.load(os.path.join(BASE_DIR, "label_encoder_sp.pkl"))
+model = joblib.load("/content/salary_prediction_model.pkl")
+encoders = joblib.load("/content/label_encoder_sp.pkl")
 
 st.title("Salary Prediction App")
 
