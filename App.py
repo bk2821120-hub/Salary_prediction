@@ -8,11 +8,11 @@ Original file is located at
 """
 
 import streamlit as st
-import pandas as pd
+import pandas as pd 
 import joblib
 
-model = joblib.load("salary_prediction_model.pkl")
-encoders = joblib.load("label_encoder_sp.pkl")
+model = joblib.load("/content/salary_prediction_model.pkl")
+encoders = joblib.load("/content/label_encoder_sp.pkl")
 st.title("Salary Predictions App")
 
 age = st.number_input("Age",18,65,25)
