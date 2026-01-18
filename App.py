@@ -24,7 +24,6 @@ education = st.selectbox("Education Level", encoders["Education Level"].classes_
 job = st.selectbox("Job Title", encoders["Job Title"].classes_)
 
 experience = st.number_input("Years of Experience",0.0,40.0,2.0)
-
 df = pd.DataFrame({
     "Age": [age],
     "Gender": [gender],
@@ -34,12 +33,8 @@ df = pd.DataFrame({
 })
 
 if st.button("Predict Salary"):
-
     categorical_cols = ["Gender", "Education Level", "Job Title"]
-
     for col in categorical_cols:
         df[col] = encoders[col].transform(df[col])
-
     prediction = model.predict(df)
-
     st.success(f"Predicted Salary: {prediction[0]:,.2f}")
