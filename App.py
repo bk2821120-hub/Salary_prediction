@@ -29,16 +29,22 @@ job = st.selectbox("Job Title",encoders["Job Title"].classes_)
 # Years of Experience input
 experience = st.number_input("Years of Experience",0.0,40.0,2.0)
 
-df=pd.DataFrame({
-    "Age":[age],
-    "Gender":[gender],
-    "Education Level":[education],
-    "Job Title":[job],
-    "Years of Experience":[experience]
+df = pd.DataFrame({
+    "Age": [age],
+    "Gender": [gender],
+    "Education Level": [education],
+    "Job Title": [job],
+    "Years of Experience": [experience]
 })
+
 if st.button("Predict Salary"):
-  for col in df.columns:
-      df[col] = encoders[col].transform(df[col])
-  prediction = model.predict(df)
-  st.success(f"Predicted Salary: {prediction[0]:,.2f}")
-  st.success(f"Result: {result[0]}")
+
+    # Encode categorical columns only
+    categorical_cols = ["Gender", "Education Level", "Job Title"]
+
+    for col in categorical_cols:
+        df[col] = encoders[col].transform(df[col])
+
+    prediction = model.predict(df)
+
+    st.success(f"Predicted Salary: {prediction[0]:,.2f}")
