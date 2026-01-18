@@ -8,26 +8,31 @@ Original file is located at
 """
 
 import streamlit as st
-import pandas as pd 
+import pandas as pd
 import joblib
+import os
 
-model = joblib.load("/content/salary_prediction_model.pkl")
-encoders = joblib.load("/content/label_encoder_sp.pkl")
-st.title("Salary Predictions App")
+# Get current directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-age = st.number_input("Age",18,65,25)
+# Load model and encoders safely
+model = joblib.load(os.path.join(BASE_DIR, "salary_prediction_model.pkl"))
+encoders = joblib.load(os.path.join(BASE_DIR, "label_encoder_sp.pkl"))
 
-# Gender selectbox
-gender = st.selectbox("Gender",encoders["Gender"].classes_)
+st.title("Salary Prediction App")
 
-# Education Level selectbox
-education = st.selectbox("Education Level",encoders["Education Level"].classes_)
+age = st.number_input("Age", min_value=18, max_value=65, value=25)
 
-# Job Title selectbox
-job = st.selectbox("Job Title",encoders["Job Title"].classes_)
+gender = st.selectbox("Gender", encoders["Gender"].classes_)
+education = st.selectbox("Education Level", encoders["Education Level"].classes_)
+job = st.selectbox("Job Title", encoders["Job Title"].classes_)
 
-# Years of Experience input
-experience = st.number_input("Years of Experience",0.0,40.0,2.0)
+experience = st.number_input(
+    "Years of Experience",
+    min_value=0.0,
+    max_value=40.0,
+    value=2.0
+)
 
 df = pd.DataFrame({
     "Age": [age],
@@ -39,7 +44,6 @@ df = pd.DataFrame({
 
 if st.button("Predict Salary"):
 
-    # Encode categorical columns only
     categorical_cols = ["Gender", "Education Level", "Job Title"]
 
     for col in categorical_cols:
